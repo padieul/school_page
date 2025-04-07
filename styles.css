@@ -1,0 +1,132 @@
+
+/* Common styles from index.html */
+:root {
+    --primary-blue: #1a4b84;
+    --secondary-blue: #3a7ca5;
+    --accent-blue: #63a6d9;
+    --light-blue: #d0e8f2;
+    --extra-light-blue: #f0f8ff;
+    --dark-blue: #0c2c52;
+    --text-dark: #333;
+    --text-light: #f8f8f8;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+nav {
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+section {
+    margin-bottom: 60px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: var(--primary-blue);
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+h3 {
+    color: var(--secondary-blue);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.technique-grid,
+.recipe-grid,
+.composition-grid,
+.course-list,
+.workshop-list,
+.masterclass-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.technique-card,
+.recipe-card,
+.composition-card,
+.course-item,
+.workshop-item,
+.masterclass-item {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.technique-card:hover,
+.recipe-card:hover,
+.composition-card:hover,
+.course-item:hover,
+.workshop-item:hover,
+.masterclass-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+button {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .technique-grid,
+    .recipe-grid,
+    .composition-grid {
+        grid-template-columns: 1fr;
+    }
+}
