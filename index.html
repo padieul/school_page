@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heidelberg Zweisprachige Schule | Гейдельбергская двуязычная школа</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1a4b84;
+            --secondary-blue: #3a7ca5;
+            --accent-blue: #63a6d9;
+            --light-blue: #d0e8f2;
+            --extra-light-blue: #f0f8ff;
+            --dark-blue: #0c2c52;
+            --text-dark: #333;
+            --text-light: #f8f8f8;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .language-toggle button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 2px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .language-toggle button:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+        
+        .language-toggle button:active {
+            transform: translateY(1px);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            text-align: center;
+            padding: 100px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.7;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .logo {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, white 60%, var(--light-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%);
+            transform: rotate(45deg);
+        }
+        
+        .logo span {
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .de {
+            color: #000000;
+        }
+        
+        .ru {
+            color: #0039a6;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 5;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-size: 1.7em;
+            font-weight: normal;
+            margin-top: 15px;
+            position: relative;
+            z-index: 5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,229.3C672,245,768,267,864,261.3C960,256,1056,224,1152,208C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        section:nth-child(even) {
+            background-color: var(--extra-light-blue);
+        }
+        
+        .welcome {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .welcome h2 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .welcome h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-blue);
+        }
+        
+        .welcome p {
+            font-size: 1.1em;
+            color: var(--text-dark);
+            margin-top: 30px;
+        }
+        
+        .about-us {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin: 40px 0;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h3 {
+            color: var(--primary-blue);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .about-text h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-blue);
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .about-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            z-index: 1;
+        }
+        
+        .feature:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature h3 {
+            color: var(--primary-blue);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .feature p {
+            color: var(--text-dark);
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            padding: 80px 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .cta h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        button.primary {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        button.primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        button.primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            z-index: -1;
+        }
+        
+        button.primary:hover::after {
+            animation: shine 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            to {
+                transform: translateX(100%);
+            }
+        }
+        
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .de-content, .ru-content {
+            display: block;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Scroll animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .in-view {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 20px 60px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature {
+                max-width: 100%;
+            }
+            
+            .about-us {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin: 20px 0 0 0;
+                max-width: 100%;
+            }
+            
+            .cta h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-toggle">
+        <button onclick="toggleLanguage('de')">Deutsch</button>
+        <button onclick="toggleLanguage('ru')">Русский</button>
+    </div>
+
+    <header>
+        <div class="logo-container" data-aos="fade-down" data-aos-duration="1000">
+            <div class="logo"><span class="de">D</span></div>
+            <div class="logo"><span class="ru">Р</span></div>
+        </div>
+        
+        <div class="de-content" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <h1>Heidelberg Zweisprachige Schule</h1>
+            <h2>Russisch-Deutsche Bildung für Ihre Kinder</h2>
+        </div>
+        
+        <div class="ru-content hidden" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <h1>Гейдельбергская двуязычная школа</h1>
+            <h2>Русско-немецкое образование для ваших детей</h2>
+        </div>
+        
+        <div class="wave"></div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="welcome">
+                <div class="de-content fade-up">
+                    <h2>Willkommen in unserer bilingualen Schule!</h2>
+                    <p>Unsere Schule bietet eine einzigartige Lernumgebung, in der Kinder sowohl Deutsch als auch Russisch fließend sprechen lernen. Wir folgen dem baden-württembergischen Lehrplan und bereichern ihn mit russischen Sprachkenntnissen und kulturellen Inhalten.</p>
+                </div>
+                
+                <div class="ru-content hidden fade-up">
+                    <h2>Добро пожаловать в нашу двуязычную школу!</h2>
+                    <p>Наша школа предлагает уникальную образовательную среду, где дети учатся свободно говорить как на немецком, так и на русском языках. Мы следуем учебному плану Баден-Вюртемберга, обогащая его знанием русского языка и культурными элементами.</p>
+                </div>
+            </div>
+
+            <div class="about-us">
+                <div class="about-text">
+                    <div class="de-content slide-in-left">
+                        <h3>Über uns</h3>
+                        <p>Gegründet von einer Gruppe engagierter Eltern und Pädagogen im Jahr 2015, hat sich unsere Schule zu einer blühenden Gemeinschaft entwickelt, die kulturellen Austausch und zweisprachige Bildung fördert.</p>
+                        <p>Unser erfahrenes Lehrpersonal besteht aus qualifizierten muttersprachlichen Lehrern für beide Sprachen, die ein kreatives und anregendes Lernumfeld schaffen.</p>
+                    </div>
+                    
+                    <div class="ru-content hidden slide-in-left">
+                        <h3>О нас</h3>
+                        <p>Основанная группой преданных родителей и педагогов в 2015 году, наша школа превратилась в процветающее сообщество, способствующее культурному обмену и двуязычному образованию.</p>
+                        <p>Наш опытный преподавательский состав включает квалифицированных учителей-носителей обоих языков, создающих творческую и стимулирующую учебную среду.</p>
+                    </div>
+                </div>
+                <div class="about-image slide-in-right">
+                    <img src="/api/placeholder/400/350" alt="School building" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="features">
+                <div class="feature fade-up">
+                    <div class="de-content">
+                        <h3>Zweisprachiger Unterricht</h3>
+                        <p>Unser Lehrplan integriert beide Sprachen nahtlos in den täglichen Unterricht, sodass die Schüler in einer natürlichen zweisprachigen Umgebung lernen.</p>
+                    </div>
+                    <div class="ru-content hidden">
+                        <h3>Двуязычное обучение</h3>
+                        <p>Наша учебная программа органично интегрирует оба языка в ежедневное обучение, позволяя ученикам учиться в естественной двуязычной среде.</p>
+                    </div>
+                </div>
+                
+                <div class="feature fade-up" data-aos-delay="100">
+                    <div class="de-content">
+                        <h3>Kulturelle Bildung</h3>
+                        <p>Wir feiern Feste und Traditionen aus beiden Kulturen und bieten regelmäßig kulturelle Veranstaltungen für die gesamte Schulgemeinschaft an.</p>
+                    </div>
+                    <div class="ru-content hidden">
+                        <h3>Культурное образование</h3>
+                        <p>Мы отмечаем праздники и традиции обеих культур и регулярно проводим культурные мероприятия для всего школьного сообщества.</p>
+                    </div>
+                </div>
+                
+                <div class="feature fade-up" data-aos-delay="200">
+                    <div class="de-content">
+                        <h3>Kleine Klassen</h3>
+                        <p>Mit maximal 15 Schülern pro Klasse gewährleisten wir individuelle Aufmerksamkeit und ein Umfeld, in dem jedes Kind gedeihen kann.</p>
+                    </div>
+                    <div class="ru-content hidden">
+                        <h3>Небольшие классы</h3>
+                        <p>С максимум 15 учениками в классе мы обеспечиваем индивидуальное внимание и среду, в которой каждый ребенок может процветать.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta fade-in">
+        <div class="de-content">
+            <h2>Geben Sie Ihrem Kind den Vorteil einer zweisprachigen Ausbildung</h2>
+            <p>Vereinbaren Sie einen Besichtigungstermin oder melden Sie sich für unser nächstes Tag der offenen Tür an.</p>
+            <button class="primary">Kontakt aufnehmen</button>
+            <button class="primary">Anmeldung</button>
+        </div>
+        
+        <div class="ru-content hidden">
+            <h2>Дайте своему ребенку преимущество двуязычного образования</h2>
+            <p>Запишитесь на экскурсию или зарегистрируйтесь на наш следующий день открытых дверей.</p>
+            <button class="primary">Связаться с нами</button>
+            <button class="primary">Регистрация</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="de-content">
+            <p>Heidelberg Zweisprachige Schule | Heidelberger Straße 123, 69115 Heidelberg | Tel: +49 6221 12345 | Email: info@hd-zweisprachig.de</p>
+            <p>&copy; 2025 Heidelberg Zweisprachige Schule. Alle Rechte vorbehalten.</p>
+        </div>
+        
+        <div class="ru-content hidden">
+            <p>Гейдельбергская двуязычная школа | Heidelberger Straße 123, 69115 Heidelberg | Тел: +49 6221 12345 | Email: info@hd-zweisprachig.de</p>
+            <p>&copy; 2025 Гейдельбергская двуязычная школа. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: false
+        });
+        
+        // Function to toggle language
+        function toggleLanguage(lang) {
+            const deContent = document.querySelectorAll('.de-content');
+            const ruContent = document.querySelectorAll('.ru-content');
+            
+            if (lang === 'de') {
+                deContent.forEach(el => el.classList.remove('hidden'));
+                ruContent.forEach(el => el.classList.add('hidden'));
+            } else {
+                deContent.forEach(el => el.classList.add('hidden'));
+                ruContent.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+        
+        // Scroll animation for elements with fade classes
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        // Uncomment the following line if you want elements to animate again when scrolling back up
+                        // entry.target.classList.remove('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
